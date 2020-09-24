@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import List from './components/List/List'
-import nextId from "react-id-generator";
+import Tasks from './components/Tasks/Tasks';
 import AddList from './components/AddList/AddButtonList';
 
 import listSvg from './assets/img/list.svg';
-import DB from './assets/db.json'
+import DB from './assets/db.json';
 
 
 function App() {
 
-  
+  const [lists, setLists] = useState(
+    DB.lists.map(item => {
+      item.color = DB.colors.filter(color => color.id === item.colorId)[0].name
+      return item;
+    })
+  )
+
+  const onAddList = (obj) => {
+    const newList = [...lists, obj]
+    setLists(newList)
+  }
 
   return (
     <div className="todo">
@@ -25,40 +35,15 @@ function App() {
             id: true
           }
         ]}/>
-        <List items={[
-          {
-            color: 'green',
-            name: 'Покупки',
-            id: nextId()
-          },
-          {
-            color: 'blue',
-            name: 'Фронтенд',
-            id: nextId()
-          },
-          {
-            color: 'pink',
-            name: 'Фильмы и сериалы',
-            id: nextId()
-          },
-          {
-            color: 'light-green',
-            name: 'Книги',
-            id: nextId()
-          },
-          {
-            color: 'grey',
-            name: 'Личное',
-            id: nextId()
-          }
-        ]}
+        <List items={lists}
         isRemovable
+        onRemove={list => console.log(list)}
         />
-      <AddList colors={DB.colors}/>
+      <AddList onAdd={onAddList} colors={DB.colors}/>
       </div>
 
       <div className="todo__tasks">
-        <h1>Hello blyt</h1>
+        <Tasks/>
       </div>
     </div>
   );

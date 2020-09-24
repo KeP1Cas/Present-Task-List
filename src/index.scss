@@ -13,6 +13,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  
 }
 
 code {
@@ -42,6 +44,10 @@ code {
     padding: 60px 20px;
   }
 
+  &__tasks {
+    flex: 1;
+    padding: 60px;
+  }
 }
 
 .button{
