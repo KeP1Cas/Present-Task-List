@@ -2,6 +2,18 @@
   .list {
     margin-bottom: 30px;
 
+    &__add-button{
+        color: #767676;
+        font-weight: 500;
+        
+        &:hover{
+            color: #070707;
+        }
+        
+    }
+    &__tasks{
+        font-weight: 500;
+    }
     li{
       display: flex;
       align-items: center;
@@ -15,35 +27,18 @@
         border-radius: 4px;
       }
 
+      .badge{
+        position: relative;
+        left: 5px;
+      }
+
       i{
         display: inline-flex;
         margin-right: 8px;
         img{
           opacity: 0.6;
         }
-      }
-      .badge{
-          width: 10px;
-          height: 10px;
-          border-radius: 30px;
-          position: relative;
-          left: 5px;
-
-          &--green{
-            background-color: #42b883;
-          }
-          &--blue{
-              background-color: #64C4ED;
-          }
-          &--pink{
-            background-color: #FFBBCC;
-        }
-        &--light-green{
-            background-color: #B6E6BD;
-        }
-        &--gray{
-            background-color: #C9D1D3;
-        }
+        
       }
     }
   }
