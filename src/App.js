@@ -1,23 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import List from './components/List/List'
 import Tasks from './components/Tasks/Tasks';
 import AddList from './components/AddList/AddButtonList';
 
 import listSvg from './assets/img/list.svg';
-import DB from './assets/db.json';
+// import DB from './assets/db.json';
+import axios from 'axios';
 
 
 function App() {
 
-  const [lists, setLists] = useState(
-    DB.lists.map(item => {
-      item.color = DB.colors.filter(color => color.id === item.colorId)[0].name
-      return item;
-    })
-  )
+  const [lists, setLists] = useState(null)
+  const [colors, setColors] = useState(null)
+  const [activeItem, setActiveItem] = useState(null)
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/lists?_expand=color&_embed=tasks')
+        .then(({ data }) => {
+        setLists(data);
+      });
+    axios.get('http://localhost:3001/colors')
+      .then(({ data }) => {
+      setColors(data);
+    });
+  }, []);
+
 
   const onAddList = (obj) => {
     const newList = [...lists, obj]
+    setLists(newList)
+  }
+
+  const onEditListTitle = (id, title) => {
+    const newList = lists.map((item) => {
+      if(item.id === id){
+        item.name = title
+      }
+      return item
+    })
     setLists(newList)
   }
 
@@ -35,15 +56,24 @@ function App() {
             id: true
           }
         ]}/>
-        <List items={lists}
+        {lists ? 
+        (<List items={lists}
+        onRemove={id => {
+          const newLists = lists.filter((item) => item.id !== id)
+          setLists(newLists)
+        }}
+        onClickItem={item => setActiveItem(item)}
+        activeItem={activeItem}
         isRemovable
-        onRemove={list => console.log(list)}
         />
-      <AddList onAdd={onAddList} colors={DB.colors}/>
+        ) : ( 
+          'Загрузка...'
+        )}
+      <AddList onAdd={onAddList} colors={colors}/>
       </div>
 
       <div className="todo__tasks">
-        <Tasks/>
+        {lists && activeItem && <Tasks list={activeItem} onEditTitle={onEditListTitle}/>}
       </div>
     </div>
   );

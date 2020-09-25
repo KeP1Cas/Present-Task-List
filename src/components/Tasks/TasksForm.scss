@@ -1,0 +1,12 @@
+.tasks__form{
+
+    &__form-new{
+        display: flex;
+        align-items: center;
+        
+        span{   
+            font-size: 16px;
+            margin-left: 20px;
+        }
+    }
+}
