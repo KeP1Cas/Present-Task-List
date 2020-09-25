@@ -5,7 +5,7 @@ import axios from 'axios'
 import editSvg from '../../assets/img/edit.svg'
 // import doneSvg from '../../assets/img/check.svg';
 import './Tasks.scss'
-const Tasks = ({list, onEditTitle}) => {
+const Tasks = ({list, onEditTitle, onAddTask}) => {
 
   const editTitle = () => {
     const newTitle = window.prompt('Название списка', list.name)
@@ -23,7 +23,7 @@ const Tasks = ({list, onEditTitle}) => {
       <div className="tasks">
         <h2 className="tasks__title">
           {list.name}
-          <img onClick={editTitle} src={editSvg} alt="done" />
+          <img className="tasks__btn-add" onClick={editTitle} src={editSvg} alt="done" />
         </h2>
 
         <div className="tasks__items">
@@ -55,7 +55,7 @@ const Tasks = ({list, onEditTitle}) => {
             </div>
           ))
         }
-          <TasksForm/>
+          <TasksForm list={list} onAddTask={onAddTask}/>
         </div>
       </div>
     );

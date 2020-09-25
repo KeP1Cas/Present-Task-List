@@ -32,6 +32,17 @@ function App() {
     setLists(newList)
   }
 
+  const onAddTask = (listId, taskObj) => {
+    const newList = lists.map(item => {
+      if(item.id === listId) {
+        item.tasks = [...item.tasks, taskObj]
+      }
+      return item;
+    })
+    setLists(newList)
+  }
+  
+
   const onEditListTitle = (id, title) => {
     const newList = lists.map((item) => {
       if(item.id === id){
@@ -52,8 +63,7 @@ function App() {
             icon: <img src={listSvg} alt="ListItem"/>,
             name: 'Все задачи',
             alt: "IconList",
-            active: true,
-            id: true
+            active: true
           }
         ]}/>
         {lists ? 
@@ -73,7 +83,13 @@ function App() {
       </div>
 
       <div className="todo__tasks">
-        {lists && activeItem && <Tasks list={activeItem} onEditTitle={onEditListTitle}/>}
+        {lists && activeItem && (
+          <Tasks 
+            list={activeItem} 
+            onEditTitle={onEditListTitle}
+            onAddTask={onAddTask}
+            />
+          )}
       </div>
     </div>
   );

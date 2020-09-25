@@ -65,6 +65,22 @@ code {
   &:active{
     background: darken(#4dd599, 6%);
   }
+
+  &:disabled {
+    background: #d8d8d8;
+  }
+
+  &--grey{
+    background: #e9ebec;
+    color: #444;
+
+    &:hover{
+      background: darken(#e9ebec, 5%);
+    }
+    &:active{
+      background: darken(#e9ebec, 8%);
+    }
+  }
 }
 
 .field{
